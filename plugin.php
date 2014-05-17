@@ -97,7 +97,7 @@ class ETPlugin_Ignore extends ETPlugin {
 
 		if (!empty($post["ignored"])) {
 			$formatted["class"][] = "ignored";
-			$formatted["info"][] = "<span class='ignoredInfo'><i class='icon-eye-close'></i> Post from ".memberLink($post["memberId"], $post["username"])." hidden. <a href='#' class='ignoredShow'>Show</a></span>";
+			$formatted["info"][] = "<span class='ignoredInfo'><i class='icon-eye-close'></i> ".sprintf(T("Post from %s hidden."), memberLink($post["memberId"], $post["username"]))." <a href='#' class='ignoredShow'>".T("Show")."</a></span>";
 		}
 	}
 
