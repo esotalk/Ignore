@@ -17,5 +17,3 @@ Create `definitions.Ignore.php` in your language pack with the following definit
 
 	$definitions["Unignore member"] = "Unignore member";	
 	$definitions["Ignore member"] = "Ignore member";	
-	$definitions["Post from %s hidden."] = "Post from %s hidden.";
-	$definitions["Show"] = "Show";

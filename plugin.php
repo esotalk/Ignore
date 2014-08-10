@@ -80,24 +80,8 @@ class ETPlugin_Ignore extends ETPlugin {
 	{
 		$ignoredIds = $this->getIgnored();
 
-		foreach ($posts as &$post) {
-			if (in_array($post["memberId"], $ignoredIds)) $post["ignored"] = true;
-		}
-	}
-
-	public function handler_conversationController_renderBefore($sender)
-	{
-		$sender->addCSSFile($this->resource("ignore.css"));
-		$sender->addJSFile($this->resource("ignore.js"));
-	}
-
-	public function handler_conversationController_formatPostForTemplate($sender, &$formatted, $post, $conversation)
-	{
-		if ($post["deleteMemberId"]) return;
-
-		if (!empty($post["ignored"])) {
-			$formatted["class"][] = "ignored";
-			$formatted["info"][] = "<span class='ignoredInfo'><i class='icon-eye-close'></i> ".sprintf(T("Post from %s hidden."), memberLink($post["memberId"], $post["username"]))." <a href='#' class='ignoredShow'>".T("Show")."</a></span>";
+		foreach ($posts as $k => &$post) {
+			if (in_array($post["memberId"], $ignoredIds)) unset($posts[$k]);
 		}
 	}
 
@@ -106,7 +90,7 @@ class ETPlugin_Ignore extends ETPlugin {
 		$ignoredIds = $this->getIgnored();
 
 		foreach ($results as &$result) {
-			if (in_array($result["lastPostMemberId"], $ignoredIds) and $result["unread"] == 1) $result["unread"] = 0; 
+			if (in_array($result["lastPostMemberId"], $ignoredIds)) $result["unread"] = 0; 
 		}
 	}
 
