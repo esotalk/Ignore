@@ -15,5 +15,7 @@ Navigate to the the admin/plugins page and activate the Ignore plugin.
 
 Create `definitions.Ignore.php` in your language pack with the following definitions:
 
+    $definitions["Unignore"] = "Unignore";    
 	$definitions["Unignore member"] = "Unignore member";	
-	$definitions["Ignore member"] = "Ignore member";	
+    $definitions["Ignore member"] = "Ignore member";    
+	$definitions["Ignored"] = "Ignored";	

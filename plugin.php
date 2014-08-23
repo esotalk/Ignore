@@ -59,7 +59,7 @@ class ETPlugin_Ignore extends ETPlugin {
 		ET::memberModel()->setStatus(ET::$session->userId, $memberId, array("ignored" => $ignored));
 
 		// Redirect back to the member profile.
-		$controller->redirect(URL("member/".$memberId));
+		$controller->redirect(R("return", URL("member/".$memberId)));
 	}
 
 	protected function getIgnored()
@@ -71,9 +71,9 @@ class ETPlugin_Ignore extends ETPlugin {
 			->where("memberId1", ET::$session->userId)
 			->where("ignored", 1)
 			->exec();
-		$mutedIds = array_keys($result->allRows("memberId2"));
+		$ignoredIds = array_keys($result->allRows("memberId2"));
 
-		return $mutedIds;
+		return $ignoredIds;
 	}
 
 	public function handler_postModel_getPostsAfter($sender, &$posts)
@@ -92,6 +92,32 @@ class ETPlugin_Ignore extends ETPlugin {
 		foreach ($results as &$result) {
 			if (in_array($result["lastPostMemberId"], $ignoredIds)) $result["unread"] = 0; 
 		}
+	}
+
+	public function handler_settingsController_initProfile($controller, $panes)
+	{
+	    $panes->add("ignored", "<a href='".URL("settings/ignored")."'>".T("Ignored")."</a>");
+	}
+
+	public function action_settingsController_ignored($controller)
+	{
+	    // The profile method sets up the settings page and returns the member's details.
+	    // The argument is the name of the currently-active pane.
+	    if (!($member = $controller->profile("ignored"))) return;
+
+	    $ignoredIds = $this->getIgnored();
+
+	    if ($ignoredIds) {
+		    $sql = ET::SQL();
+		    $sql->where("m.memberId IN (:memberIds)")
+		    	->bind(":memberIds", $ignoredIds)
+		    	->orderBy("m.username ASC");
+		    $members = ET::memberModel()->getWithSQL($sql);
+		    $controller->data("ignored", $members);
+		}
+
+		$controller->addCSSFile($this->resource("ignore.css"));
+	    $controller->renderProfile($this->view("ignored"));
 	}
 
 }
