@@ -21,4 +21,6 @@ if (!defined("IN_ESOTALK")) exit;
 
 </ul>
 
+<?php else: ?>
+<p class="help"><?php echo T("message.noIgnoredMembers"); ?></p>
 <?php endif; ?>

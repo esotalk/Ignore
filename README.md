@@ -19,3 +19,5 @@ Create `definitions.Ignore.php` in your language pack with the following definit
 	$definitions["Unignore member"] = "Unignore member";	
     $definitions["Ignore member"] = "Ignore member";    
 	$definitions["Ignored"] = "Ignored";	
+	$definitions["Ignored"] = "Ignored";	
+	$definitions["message.noIgnoredMembers"] = "You haven't ignored any members. To ignore a member, go to their profile and choose <strong>Controls &rarr; Ignore member</strong>.";	

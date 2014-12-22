@@ -30,6 +30,11 @@ class ETPlugin_Ignore extends ETPlugin {
 		return true;
 	}
 
+	public function init()
+	{
+		ET::define("message.noIgnoredMembers", "You haven't ignored any members. To ignore a member, go to their profile and choose <strong>Controls &rarr; Ignore member</strong>.");
+	}
+
 	public function handler_memberController_initProfile($sender, &$member, $panes, $controls, $actions)
 	{
 		if (!ET::$session->user or $member["memberId"] == ET::$session->userId) return;
